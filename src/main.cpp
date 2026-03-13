@@ -3,14 +3,15 @@
 
 #define LED 3
 #define RPM_INT 18 
-#define DRIVER_VCC 11
+#define IR_VCC 11
 #define MOTOR_VCC 9
 #define IR_FREQ 600
+#define DRIVER_EN 39
 
 #define LCD_EN 7
 #define LCD_RST 6
 
-void calculateRPM_INT();
+void calculateRPM();
 
 int avgRPM;
 
@@ -20,15 +21,15 @@ void setup()
   Serial.begin(9600);
   pinMode(LED, OUTPUT);
   pinMode(RPM_INT, INPUT_PULLUP);
-  pinMode(DRIVER_VCC, OUTPUT);
+  pinMode(IR_VCC, OUTPUT);
   pinMode(MOTOR_VCC, OUTPUT);
-  digitalWrite(DRIVER_VCC, LOW);
+  digitalWrite(IR_VCC, LOW);
 
   delay(3000);
 
   digitalWrite(LED, HIGH);
-  digitalWrite(DRIVER_VCC, HIGH);
-  digitalWrite(MOTOR_VCC, HIGH);
+  digitalWrite(IR_VCC, HIGH);
+  digitalWrite(DRIVER_EN, HIGH);
 }
 
 void loop() 
@@ -52,8 +53,6 @@ void calculateRPM()
       count++;
     }
   }
-
-
 
   int avgRPM_INT = count / IR_FREQ;
   Serial.println(avgRPM_INT);
